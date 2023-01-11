@@ -1,5 +1,7 @@
 <h1>Laboratório de Programação 2 - UFCG</h1>
 
+<h2>Repositório dos laboratórios de Programação em Java - UFCG</h2>
+
 <h3>Laboratório 1: DIRLIDIDI</h3>
 <h3>Laboratório 2: Controle Institucional da Situação Acadêmica (COISA)</h3>
 <h3>Laboratório 3: Agenda de Contatos</h3>
