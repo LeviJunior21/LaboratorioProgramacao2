@@ -1,0 +1,257 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+/**
+ * Controlador de alunos e grupos da UFCG. 
+ * 
+ * @author LeviJunior
+ *
+ */
+
+public class ControleAlunos {
+
+	private HashMap<String, Aluno> alunos;
+    private HashMap<String, Grupo> grupos;
+    private ArrayList<Aluno> registraResposta;
+
+    public ControleAlunos() {
+    	this.alunos = new HashMap<>();
+    	this.grupos = new HashMap<>(); 
+    	this.registraResposta = new ArrayList<>();
+    }
+    /**
+     * Cadastra o aluno com a chave matricula e constrói o aluno com matricula nome e o curso.
+     * 
+     * @param matricula matricula do aluno.
+     * @param nome nome do aluno.
+     * @param curso curso do aluno.
+     * @theow IllegalArgumentException Retorna um erro caso um dos parâmetros seja vazio.
+     * @return Retorna uma mensagem sobre a situação do cadastro.
+     */
+    public String cadastraAluno(String matricula, String nome, String curso) {
+    	try {
+    		Aluno aluno = new Aluno(matricula, nome, curso);
+    		if (!existeAluno(matricula)) {
+    			this.alunos.put(matricula, aluno);
+    			return "CADASTRO REALIZADO!";
+    		}
+    		else {
+    			return "MATRÍCULA JÁ CADASTRADA!"; 
+    		}
+    	}
+    	catch (IllegalArgumentException npe) {
+    		return npe.getMessage();
+    	}
+    }
+
+    /**
+     * Verifica se o aluno existe ou não na lista de alunos.
+     * 
+     * @param matricula matrícula do aluno.
+     * @return Retorna um valor booleano se o aluno está ou não cadastrado.
+     */
+    private boolean existeAluno(String matricula) {
+    	return alunos.containsKey(matricula);
+    }
+    
+    /**
+     * Consulta todos os dados do aluno.
+     * 
+     * @param matricula matricula do aluno.
+     * @return Retorna uma String com a matricula, nome e curso do aluno. 
+     * Ou retorna ALUNO NÃO CADASTRADO caso não seja encontrado. 
+     */
+    public String consultaAluno(String matricula) {
+    	if (existeAluno(matricula)) {
+    		return this.alunos.get(matricula).toString();
+    	}
+    	return "ALUNO NÃO CADASTRADO!";
+    }
+
+    /**
+     * Cadastra o grupo caso ele não esteja cadastrado na lista de grupos.
+     * 
+     * @param nome nome do grupo.
+     * @param tamanho tamanho da lista de alunos pertencentes ao grupo.
+     * @return Retorna uma frase sobre se o cadastro foi feito, se já foi cadastrado ou ocorreu algum erro.
+     */
+    public String cadastraGrupo(String nome, int tamanho) {
+    	try {
+    		Grupo grupo = new Grupo(nome, tamanho);
+    		if (!existeGrupo(nome)) {
+    			this.grupos.put(nome, grupo);
+    			return "CADASTRADO REALIZADO!";
+    		}
+    		else {
+    			return "GRUPO JÁ CADASTRADO!";
+    		}
+    	}
+    	catch(NullPointerException npe) {
+    		return npe.getMessage();
+    	}
+    }
+
+    /**
+     * Verifica se o grupo já existe.
+     * 
+     * @param grupo nome do grupo.
+     * @return Retorna um valor booleano se o já existe ou não na lista de grupos.
+     */
+    private boolean existeGrupo(String grupo) {
+    	return this.grupos.containsKey(grupo);
+    }
+    
+    /**
+     * Verifica a pertinencia do aluno a um determinado grupo criado.
+     * 
+     * @param matricula matrícula do aluno.
+     * @param grupo nome do grupo criado.
+     * @return Retorna uma String se o aluno pertence ou não ao grupo, ou se o aluno ou o grupo
+     * não estão cadastrados ainda.
+     */
+    public String verificarPertinencia(String matricula, String grupo) {
+    	Grupo gp = this.grupos.get(grupo);
+    	if (gp != null) {
+    		if (gp.existeAluno(matricula)) {
+	   			return "ALUNO PERTENCE AO GRUPO!";
+    		}
+    		else {
+    			return "ALUNO NÃO CADASTRADO!";
+    		}
+    	}
+    	else {
+    		return "GRUPO NÃO CADASTRADO!";
+    	}
+    }
+    
+    /**
+     * Cadastra o grupo com apenas o nome do grupo. Seu tamanho da quantidade de alunos suportado no grupo será ilimitado.
+     * 
+     * @param nome nome do grupo.
+     * @return Retorna uma String sobre a situação do cadastro do grupo. 
+     */
+    public String cadastraGrupo(String nome) {
+    	try {
+    		Grupo grupo = new Grupo(nome);
+    		if (!existeGrupo(nome)) {
+    			this.grupos.put(nome, grupo);
+    			return "CADASTRADO REALIZADO!";
+    		}
+    		else {
+    			return "GRUPO JÁ CADASTRADO!";
+    		}
+    	}
+    	catch(NullPointerException npe) {
+    		return npe.getMessage();
+    	}
+    }
+
+    /**
+     * Exibe um resumo sobre o aluno.
+     * 
+     * @param matrícula matricula do aluno.
+     * @return Retorna a matricula nome e curso caso do aluno caso ele exista na lista de alunos. 
+     * Caso contrário ele retorna NÃO CADASTRADO!
+     */
+    public String exibirAluno(String matricula) {
+    	if (this.alunos.containsKey(matricula)) {
+    		return this.alunos.get(matricula).toString();
+    	}
+    	else {
+    		return "ALUNO NÃO CADASTRADO!";
+    	}
+    }
+
+    /**
+     * Verifica se o aluno está cadastrado em um determinado grupo.
+     * 
+     * @param nome nome do aluno.
+     * @param matricula matricula do aluno.
+     * @return Retorna um valor booleano se o aluno participa ou não de um determinado grupo.
+     */
+    public boolean participaGrupo(String nome, String matricula) {
+    	Grupo gp = this.grupos.get(nome); 
+    	if (gp != null) {
+    		if (gp.existeAluno(matricula)) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+
+    /**
+     * Registra a resposta do aluno a partir da sua matricula.
+     * 
+     * @param matricula matriciula do aluno. 
+     * @return Retorna um valor booleano se a resposta foi cadastrada.  
+     */
+    public boolean registraRespostaAluno(String matricula) {
+    	if (this.alunos.containsKey(matricula)) {
+    		this.registraResposta.add(this.alunos.size(), this.alunos.get(matricula));
+    		return true;
+    	}
+    	return false;
+    }
+
+    /**
+     * Imprime todas as respostas cadastradas do aluno em todos os grupos. 
+     * 
+     * @param matricula matricula do aluno.
+     * @return Retorna uma String sobre as respostas do aluno em vários grupos.
+     */
+    public String imprimeTodasRespostas(String matricula) {
+    	String respostas = "";
+    	int contador = 0;
+    	for (Aluno aluno: this.registraResposta) {
+    		respostas += (contador + ". " + aluno.toString());
+    	}
+    	return respostas;
+    }
+    
+    /**
+     * Lista todos os alunos onde o aluno está alocado.
+     * 
+     * @param matricula matrícula do aluno.
+     * @return Retorna um array de String com as informações nome e tamanho sobre cada grupo onde o aluno está alocado.
+     */
+    public String[] listarGruposAluno(String matricula) {
+    	String[] lista = new String[100*100];
+    	int iterador = 0;
+    	for (String grupo: this.grupos.keySet()) {
+    		if (this.grupos.get(grupo).existeAluno(matricula)) {
+    			lista[iterador] = this.grupos.get(grupo).toString();
+    			iterador ++;
+    		}
+    	}
+    	return lista;
+    }
+ 
+    /**
+     * Aloca o aluno em um determinado grupo criado.
+     * 
+     * @param matricula matrícula do aluno.
+     * @param nomeGrupo nome do grupo.
+     * @return Retorna uma String se o aluno foi ou não cadastrado e caso o aluno ou grupo não exista então 
+     * é retornado que o aluno ou o grupo não existe.
+     */
+    public String alocarAlunoGrupo(String matricula, String nomeGrupo) {
+    	if (existeAluno(matricula)) {
+    		for(String grupo: this.grupos.keySet()) {
+    			if (this.grupos.get(grupo).getNome().equals(nomeGrupo)) {
+    				boolean verificar = this.grupos.get(grupo).cadastraAluno(matricula, this.alunos.get(matricula));
+    				if (verificar) {
+    					return "ALUNO ALOCADO!";
+    				}
+    				else {
+    					return "ALUNO PERTENCE AO GRUPO!";
+    				}
+    			}
+    		}
+    	}
+    	else {
+    		return "ESTA MATRÍCULA NÃO EXISTE!";
+    	}
+    return "O GRUPO NÃO EXISTE!";
+    }
+}

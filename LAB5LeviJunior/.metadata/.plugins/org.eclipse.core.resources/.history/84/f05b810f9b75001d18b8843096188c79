@@ -1,0 +1,56 @@
+package documin;
+import java.util.HashMap;
+
+public class Termo implements Elemento{
+	private int prioridade;
+	private String valor;
+	private HashMap<String, String> propriedades;
+	private String separador;
+	private String ordem;
+	
+	public Termo(int prioridade, String valor, HashMap<String, String> propriedades, String separador, String ordem) {
+		this.prioridade = prioridade;
+		this.valor = valor;
+		this.propriedades = propriedades;
+		this.separador = separador;
+		this.ordem = ordem;
+	}
+	
+	public String gerarRepresentacaoCompleta() {
+		String representacao = "Total termos: " + this.propriedades.size() + "\n- ";
+		String[] palavras = valor.split(separador);
+		for (int i = palavras.length - 1; i >= 0; i--) {
+			representacao += palavras[i] + ", ";
+		}
+		return representacao;
+	}
+	
+	public String gerarRepresentacaoResumida() {
+		return valor;
+	}
+
+	@Override
+	public int hashCode() {
+		return prioridade;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		} else
+		if (this.getClass() != o.getClass()) {
+			return false;
+		} 
+		else {
+			
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return valor;
+	}
+	
+}

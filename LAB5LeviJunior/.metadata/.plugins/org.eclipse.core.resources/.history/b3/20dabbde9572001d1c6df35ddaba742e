@@ -1,0 +1,11 @@
+package documin;
+
+public interface Elemento_Interface {
+		
+	public boolean criarDocumento(String titulo);
+	public boolean criarDocumento(String titulo, int tamanhoMaximo);
+	public void removerDocumento(String titulo);
+	public int contarElementos(String titulo);
+	public String[] exibirDocumento(String titulo);
+
+}

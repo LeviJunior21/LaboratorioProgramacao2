@@ -1,0 +1,39 @@
+package documin;
+
+public class Lista implements Documentable{
+
+	public Lista() {
+		
+	}
+	
+	@Override
+	public boolean criarDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean criarDocumento(String titulo, int tamanhoMaximo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void removerDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int contarElementos(String titulo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String[] exibirDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

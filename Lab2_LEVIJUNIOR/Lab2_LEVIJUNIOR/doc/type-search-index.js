@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"Lab_LeviJunior","l":"Coisa"},{"p":"Lab_LeviJunior","l":"CoisaBonus"},{"p":"Lab_LeviJunior","l":"Descanso"},{"p":"Lab_LeviJunior","l":"Disciplina"},{"p":"Lab_LeviJunior","l":"RegistroResumos"},{"p":"Lab_LeviJunior","l":"RegistroTempoOnline"}];updateSearchResults();

@@ -1,0 +1,64 @@
+package documin;
+
+public class Texto implements Documentable{
+
+	private String titulo;
+	private int tamanho;
+	
+	public Texto(String titulo, int tamanho) {
+		if (titulo.equals("") || tamanho <= 0 || !verificaTituloValido(titulo)) {
+			throw new IllegalArgumentException("");
+		}
+		this.titulo = titulo; 
+		this.tamanho = tamanho;
+	}
+	
+	public Texto(String titulo) {
+		if (titulo.equals("") || !verificaTituloValido(titulo)) {
+			throw new IllegalArgumentException("");
+		}
+		this.titulo = titulo; 
+		this.tamanho = Integer.MAX_VALUE;
+	}
+	
+	private boolean verificaTituloValido(String titulo) {
+		String[] caracteres = titulo.split("");
+		for (String caractere: caracteres) {
+			if (!caractere.equals(" ")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean criarDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean criarDocumento(String titulo, int tamanhoMaximo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void removerDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int contarElementos(String titulo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String[] exibirDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

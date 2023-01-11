@@ -1,0 +1,128 @@
+/**
+ * 
+ * @author LeviJunior
+ *
+ */
+
+import java.util.Scanner;
+public class main {
+	public static void main(String[] args) {
+		
+		ControleAlunos controle = new ControleAlunos();
+		
+		Scanner scanner = new Scanner(System.in);
+		String frase = "\n(C)adastrar aluno\n"
+					 + "(E)xibir aluno\n"
+					 + "(N)ovo grupo\n"
+					 + "(A)locar Aluno no Grupo e Verificar pertinência a Grupos\n"
+					 + "(O)lhaí quais Grupos o Aluno Tá.\n"
+					 + "(S)im, quero Fechar o Programa!";
+		
+		for(;;) {
+			System.out.println(frase);
+			System.out.print("\nOpção>");
+			String opcao = scanner.nextLine().toUpperCase();
+			
+			switch (opcao) {
+				case "C":
+					cadastraAluno(scanner, controle); 
+					break;
+				case "E":
+					exibirAluno(scanner, controle);
+					break;
+				case "A":
+					alocarAlunoGrupo(scanner, controle);
+					break;
+				case "N":
+					novoGrupo(scanner, controle);
+					break;
+				case "O":
+					listarGruposAluno(scanner, controle);
+					break;
+				case "S":
+					sai();
+					break;
+			}
+		}
+	}
+	
+	public static void cadastraAluno(Scanner scanner, ControleAlunos controle) {
+		System.out.print("\nMatrícula: ");
+		String matricula = scanner.nextLine();
+		System.out.print("Nome: ");
+		String nome = scanner.nextLine();
+		System.out.print("Curso: ");
+		String curso = scanner.nextLine();
+		
+		String resultado = controle.cadastraAluno(matricula, nome, curso);
+		System.out.println(resultado);
+	}
+	
+	public static void exibirAluno(Scanner scanner, ControleAlunos controle) {
+		System.out.print("Matrícula: ");
+		String matricula = scanner.nextLine();
+		
+		String infoAluno = controle.exibirAluno(matricula);
+		System.out.println(infoAluno);
+	}
+	
+	public static void novoGrupo(Scanner scanner, ControleAlunos controle) {
+		System.out.print("Grupo: ");
+		String nome = scanner.nextLine();
+		System.out.print("Tamanho: ");
+		int tamanho = scanner.nextInt();
+		
+		if (tamanho == 0) {
+			String resultadoCadastro = controle.cadastraGrupo(nome);
+			System.out.println(resultadoCadastro);
+
+		} else if (tamanho > 0){
+			String resultadoCadastro = controle.cadastraGrupo(nome, tamanho);
+			System.out.println(resultadoCadastro);
+		}
+		else {
+			System.out.println("Tamanho inválido!");
+		}
+	}
+	
+	public static void alocarAlunoGrupo(Scanner scanner, ControleAlunos controle) {
+		
+		System.out.println("(A)locar Aluno ou (P)ertinência a Grupo? ");
+		System.out.print("Matrícula: ");
+		String matricula = scanner.nextLine(); 
+		System.out.print("GRUPO: ");
+		String grupo = scanner.nextLine(); 
+		String entrada = scanner.nextLine();
+		if (entrada.equals("A")) {
+			String resposta = controle.alocarAlunoGrupo(matricula, grupo);
+			System.out.println(resposta);
+		} else 
+		if (entrada.equals("P")) {
+			boolean resposta = controle.verificarPertinencia(matricula, grupo);
+			if (resposta) {
+				System.out.println("ALUNO PERTENCE AO GRUPO!");
+			}
+			else {
+				System.out.println("ALUNO NÃO PERTENCE AO GRUPO");
+			}
+		}
+		else {
+			System.out.println("OPÇÃO INVÁLIDA!");
+		}
+	}
+	
+	public static void listarGruposAluno(Scanner scanner, ControleAlunos controle) {
+		System.out.print("Matrícula: ");
+		String matricula = scanner.nextLine();
+		String[] listaGrupos = controle.listarGruposAluno(matricula);
+		for (int i = 0; i < listaGrupos.length; i++) {
+			if (listaGrupos[i] != null) {
+				System.out.println(listaGrupos[i]);
+			}
+		}
+	}
+	
+	public static void sai() {
+		System.exit(0);
+	}
+}

@@ -1,0 +1,5 @@
+package documin;
+
+class Texto implements Elemento {
+	
+}

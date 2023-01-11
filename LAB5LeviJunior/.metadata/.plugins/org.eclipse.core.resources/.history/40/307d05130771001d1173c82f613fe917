@@ -1,0 +1,13 @@
+package documin;
+
+public interface Documentable {
+	
+	private String titulo;
+	
+	public boolean criarDocumento(String titulo);
+	public boolean criarDocumento(String titulo, int tamanhoMaximo);
+	public void removerDocumento(String titulo);
+	public int contarElementos(String titulo);
+	public String[] exibirDocumento(String titulo);
+
+}

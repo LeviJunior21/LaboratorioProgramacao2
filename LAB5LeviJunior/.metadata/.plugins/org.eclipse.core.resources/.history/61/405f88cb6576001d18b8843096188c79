@@ -1,0 +1,16 @@
+package documin;
+
+import static org.junit.Assert.assertEquals;
+
+class TestTermo {
+
+	void testTermoGerarRepresentacaoCompleta() {
+		Termo termo = new Termo(1, "Teste / termos / Aleatórios" , null, "/", "");
+		assertEquals(termo.gerarRepresentacaoCompleta(), "");
+	}
+	
+	void testTermoGerarRepresentacaoResumida() {
+		Termo termo = new Termo(1, "Teste / termos / Aleatórios" , null, "/", "");
+		assertEquals(termo.gerarRepresentacaoResumida(), "");
+	}
+}

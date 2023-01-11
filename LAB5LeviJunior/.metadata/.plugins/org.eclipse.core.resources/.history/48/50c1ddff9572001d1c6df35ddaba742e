@@ -1,0 +1,14 @@
+package documin;
+public class Elemento<Interface> {
+
+    public String gerarRepresentacaoCompleta() {
+		return null;
+
+    }
+
+    public String gerarRepresentacaoResumida() {
+		return null;
+
+    }
+
+}

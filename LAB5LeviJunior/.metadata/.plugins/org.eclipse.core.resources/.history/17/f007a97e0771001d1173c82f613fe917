@@ -1,0 +1,15 @@
+package documin;
+
+public class DocumentoController {
+
+	public boolean criarDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean criarDocumento(String titulo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

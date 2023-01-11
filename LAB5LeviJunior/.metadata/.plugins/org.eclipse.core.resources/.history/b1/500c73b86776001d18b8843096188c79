@@ -1,0 +1,27 @@
+package documin;
+
+import java.util.ArrayList;
+
+public class DocumentoSistema {
+	private ArrayList<Elemento> documentos;
+	
+	public DocumentoSistema() {
+		this.documentos = new ArrayList<>();
+	}
+	
+	public void cadastraTexto(String texto) {
+		this.documentos.add(new Texto(texto));
+	}
+	
+	public void cadastraTermo() {
+		this.documentos.add(new Termo(0, null, null, null, null));
+	}
+	
+	public void cadastraLista() {
+		this.documentos.add(new Lista(0, null, null, null, null));
+	}
+	
+	public void cadastraTitulo() {
+		this.documentos.add(new Titulo(0, null, 0, false, null));
+	}
+ }

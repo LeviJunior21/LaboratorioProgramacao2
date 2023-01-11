@@ -1,0 +1,18 @@
+package documin;
+
+class Texto implements Elemento {
+	private String valor; 
+	
+	public Texto(String valor) {
+		this.valor = valor;
+	}
+	
+	public String gerarRepresentacaoCompleta() {
+		return this.valor;
+	}
+	
+	public String gerarRepresentacaoResumida() {
+		return this.valor;
+	}
+	
+}

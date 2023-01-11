@@ -1,0 +1,317 @@
+package agenda;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Testes para verificar o funcionamento da minha agenda de contatos.
+ * 
+ * @author LeviJunior
+ *
+ */
+class TestAgenda{
+
+	private Contato contato;
+	private Agenda agenda;
+	
+	/**
+	 * Meus testes foram feitos após finalizar o código, então, tive que adaptar algumas coisas aos métodos em como eu fiz o meu código.
+	 * Ou seja, nem tudo é true ou false para fazer teste, eu tive que fazer assert nos retornos das minhas funções para checar se batem o resultado esperado.
+	*/
+	
+	@BeforeEach
+	void preparaAgenda() {
+		this.agenda = new Agenda();
+	}
+	
+	@BeforeEach
+	void test_cadastraContato() {
+		this.contato = new Contato("Matheus", "Gaudencio", "(83) 99999-0000");
+	}
+	
+	@Test
+	void test_cadastraContatoEmPosicaoVazia() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		assertEquals(this.agenda.existeContato("Matheus", "Gaudencio"), true);
+	}
+	
+	@Test
+	void test_cadastraContatoEmPosicaoExistente() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraContato(1, "Pedro", "Silva", "(84) 98888-1111");
+		assertEquals(this.agenda.existeContato("Pedro", "Silva"), true);
+	}
+	
+	@Test
+	void test_cadastraContatoJaExistenteNoutraPosicao() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraContato(3, "Matheus", "Gaudencio", "(84) 98888-1111");
+		assertEquals(this.agenda.existeContato("Pedro", "Silva"), false);
+	}
+	
+	@Test
+	void test_cadastraContatoNaPosicaoLimite() {
+		this.agenda.cadastraContato(100, "Matheus", "Gaudencio", "(83) 99999-0000");
+		assertEquals(this.agenda.existeContato("Matheus", "Gaudencio"), true);
+	}
+	
+	@Test
+	void test_cadastraContatoAcimaDOLimite() {
+		try {
+			this.agenda.cadastraContato(101, "Matheus", "Gaudencio", "(83) 99999-0000");
+		}
+		catch(IllegalArgumentException npe) {
+			assertEquals("POSIÇÃO INVÁLIDA!", npe.getMessage());
+			assertEquals(this.agenda.existeContato("Matheus", "Gaudencio"), false);
+		}
+	}
+	
+	@Test
+	void test_cadastraContatoAbaixoDoLimite() {
+		try {
+			this.agenda.cadastraContato(0, "Matheus", "Gaudencio", "(83) 99999-0000");
+		}
+		catch(IllegalArgumentException iae) {
+			assertEquals("POSIÇÃO INVÁLIDA!", iae.getMessage());
+			assertEquals(this.agenda.existeContato("Matheus", "Gaudencio"), false); 
+		}
+	}
+	
+	@Test
+	void test_cadastraContatoComTelefoneVazio() {
+		try {
+			this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "");
+		}
+		catch(IllegalArgumentException iae) {
+			assertEquals("CONTATO VAZIO!", iae.getMessage());
+			assertEquals(this.agenda.existeContato("Matheus", "Gaudencio"), false);
+		}
+	}
+	
+	@Test
+	void test_cadastraContatoComNomeVazio() {
+		try {
+			this.agenda.cadastraContato(1, "", "Gaudencio", "(83) 99999-0000");
+		}
+		catch(IllegalArgumentException iae) {
+			assertEquals("CONTATO VAZIO!", iae.getMessage());
+			assertEquals(this.agenda.existeContato("", "Gaudencio"), false);
+
+		}
+	}
+	
+	@Test
+	void test_cadastraContatoInvalidoComNumeroNull() {
+		try {
+			this.agenda.cadastraContato(8, "Matheus", "Gaudencio", null);
+		}
+		catch(NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+			assertEquals(this.agenda.existeContato("Matheus", "Gaudencio"), false);
+		}
+	}
+	
+	@Test
+	void cadastraETrocaTelefonePorNull() {
+		try {
+			this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+			this.agenda.trocarTelefone(1, null);
+		}
+		catch (NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+		}
+	}
+	
+	
+	@Test
+	void cadastraETrocaTelefoneComPosicaoDoLimiteInferior() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.trocarTelefone(1, "(83) 99999-9999");
+		assertEquals(this.agenda.getContato(1), "Matheus Gaudencio\n(83) 99999-9999");
+	}
+	
+	@Test
+	void cadastraETrocaTelefoneComPosicaoDoLimiteSuperior() {
+		this.agenda.cadastraContato(100, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.trocarTelefone(100, "(83) 99999-9999");
+		assertEquals(this.agenda.getContato(100), "Matheus Gaudencio\n(83) 99999-9999");
+	}
+	
+	@Test
+	void test_exibeContatoCadastradoComTodosDados() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		assertEquals(this.agenda.getContato(1), "Matheus Gaudencio\n(83) 99999-0000");
+	}
+	
+	@Test
+	void test_exibeContatoSemTelefone() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		assertEquals(this.agenda.getNomeCompleto(1), "Matheus Gaudencio");
+	}
+	
+	@Test
+	void test_exibeContatoEmPosicaoSemContato() {
+		assertEquals(this.agenda.getNomeCompleto(100), "");
+	}
+	
+	@Test
+	void test_exibeContatoEmPosicaoInferior() {
+		assertEquals(this.agenda.getNomeCompleto(0), "");
+	}
+	
+	@Test
+	void test_exibeContatoEmPosicaoSuperior() {
+		assertEquals(this.agenda.getNomeCompleto(101), "");
+	}
+	
+	@Test
+	void test_exibeContatoFavoritoEmPosicaoVaziaInicial() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraFavorito(1, 1);
+		assertEquals(this.agenda.getContato(1), "❤️ Matheus Gaudencio\n(83) 99999-0000");
+	}
+	
+	@Test
+	void test_adicionaEDepoisRemoveContatoFavorito() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraFavorito(1, 1);
+		this.agenda.removerFavorito(1);
+		assertEquals(this.agenda.existeFavorito(1), false);
+	}
+	
+	@Test
+	void test_adicionaEVerificaSeExisteContatoNaPosicaoLimiteFinalDosFavoritos() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraFavorito(1, 10);
+		assertEquals(this.agenda.existeFavorito(1), true);
+	}
+	
+	@Test
+	void test_adicionaEmPosicaoVaziaEVerificaSeExisteContatoNoutraPosicaoDeFavoritos() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraFavorito(1, 3);
+		assertEquals(this.agenda.existeFavorito(1), true);
+	}
+	
+	@Test
+	void test_adicionaEmPosicaoFavoritaNaoVazia() {
+		this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+		this.agenda.cadastraContato(2, "Lucas", "Pereira", "(83) 99999-0000");
+		this.agenda.cadastraFavorito(1, 3);
+		assertEquals(this.agenda.existeFavorito(1), true);
+		assertEquals(this.agenda.existeFavorito(2), false);
+		this.agenda.cadastraFavorito(2, 3);
+		assertEquals(this.agenda.existeFavorito(1), false);
+		assertEquals(this.agenda.existeFavorito(2), true);
+
+	}
+	
+	@Test
+	void test_adicionaEmPosicaoInvalidaAcimaDoLimiteDeFavoritos() {
+		assertEquals(this.agenda.existeFavorito(1), false);
+		try {
+			this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+			this.agenda.cadastraFavorito(1, 11);
+		}
+		catch(IllegalArgumentException iae) {
+			assertEquals("POSIÇÃO INVÁLIDA!", iae.getMessage());
+			assertEquals(this.agenda.existeFavorito(1), false);
+		}
+	}
+
+	@Test
+	void test_adicionaEmPosicaoInvalidaAbaixoDoLimiteDeFavoritos() {
+		assertEquals(this.agenda.existeFavorito(1), false);
+		try {
+			this.agenda.cadastraContato(1, "Matheus", "Gaudencio", "(83) 99999-0000");
+			this.agenda.cadastraFavorito(1, 11);
+		}
+		catch(IllegalArgumentException iae) {
+			assertEquals("POSIÇÃO INVÁLIDA!", iae.getMessage());
+			assertEquals(this.agenda.existeFavorito(1), false);
+
+		}
+	}
+	
+	@Test
+	void test_pegaONomeDoContato() {
+		assertEquals(this.contato.getNome(), "Matheus");
+	}
+	
+	@Test
+	void test_pegaOSobrenomeDoContato() {
+		assertEquals(this.contato.getSobrenome(), "Gaudencio");
+	}
+	
+	@Test
+	void test_pegaOTelefoneDoContato() {
+		assertEquals(this.contato.getTelefone(), "(83) 99999-0000");
+	}
+	
+	@Test
+	void test_pegaONomeCompleto() {
+		assertEquals(this.contato.getNomeCompleto(), "Matheus Gaudencio");
+	}
+	
+	@Test
+	void test_aleteraNumeroSendoEleInvalido() {
+		try {
+		this.contato.setTelefone(null);
+		}
+		catch (NullPointerException npe) {
+			assertEquals("TELEFONE INVÁLIDO!", npe.getMessage());
+			assertEquals(this.contato.getTelefone(), "(83) 99999-0000");
+		}
+	}
+	
+	@Test
+	void test_cadastroContatoTudoNull() {
+		try {
+			 new Contato(null, null, null);
+		}
+		catch (NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+		}
+	}
+	
+	@Test
+	void test_cadastroContatoComNomeEORestoNull() {
+		try {
+			new Contato("Matheus", null, null);
+		}
+		catch (NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+		}
+	}
+	
+	@Test
+	void test_cadastroContatoComSobrenomeETelefoneEONomeNull() {
+		try {
+			new Contato(null, "Gaudencio", "(83) 99999-0000");
+		}
+		catch (NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+		}
+	}
+	
+	@Test
+	void test_cadastroContatoComNomeSobrenomeETelefoneNull() {
+		try {
+			new Contato("Matheus", "Gaudencio", null);
+		}
+		catch (NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+		}
+	}
+	
+	@Test
+	void test_cadastroContatoComNomeNullETelefoneNull() {
+		try {
+			new Contato(null, "Gaudencio", null);
+		}
+		catch (NullPointerException npe) {
+			assertEquals("CONTATO INVÁLIDO!", npe.getMessage());
+		}
+	}
+} 

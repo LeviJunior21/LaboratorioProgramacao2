@@ -1,0 +1,127 @@
+import java.util.HashMap;
+
+/**
+ * 
+ * @author LeviJunior
+ *
+ */
+
+public class Grupo {
+
+    private String nome;
+    private int tamanho;
+    private boolean existeLimite;
+    private HashMap<String, Aluno> alunos;
+
+    /**
+     * Constrói o grupo e atribui o seu nome.
+     * 
+     * @param nome nome do grupo.
+     */
+    public Grupo(String nome) {
+    	if (this.nome != null) {
+    		if (this.nome.equals("")) {
+    			this.nome = nome;
+    			this.existeLimite = false;
+    			this.tamanho = 0;
+    		}
+    		else {
+    			throw new IllegalArgumentException("Parâmetro vazio recebido!");
+    		}
+    	}
+    	else {
+    		throw new NullPointerException("Parâmetro Null recebido!");
+    	}
+    }
+
+    /**
+     * Constrói o grupo e atribui o seu nome e o tamanho do limite de alunos no grupo.
+     * 
+     * @param nome nome do grupo.
+     * @param tamanho numero de integrantes do grupo.
+     * @throws NullPointerException Retorna um erro caso receba um parâmetro null.
+     * @throws IllegalArgumentException Retorna um erro caso o parâmetro recebido for vazio ou tamanho inválido.
+     */
+    public Grupo(String nome, int tamanho) {
+    	if (this.nome == null ) {
+    		throw new NullPointerException("Parâmetro Null recebido!");
+    	} else
+    	if (this.nome.equals("")) {
+			throw new IllegalArgumentException("Parâmetro vazio recebido!");
+    	} else 
+    	if (tamanho <= 0) {
+    		throw new IllegalArgumentException("Tamanho do grupo inválido!");
+    	}
+    	else {
+    		this.nome = nome;
+    		this.tamanho = tamanho;
+    		this.existeLimite = true;
+    	}
+    }
+
+    public String cadastraAluno(String matricula, Aluno aluno) {
+    	if (!alunos.containsKey(matricula)) {
+    		this.alunos.put(matricula, aluno);
+    		return true;
+    	}
+    	return false;
+    }
+    
+    /**
+     * Verifica se o aluno já está cadastrado no grupo.
+     * 
+     * @param matricula matricula do aluno.
+     * @return Retorna um valor booleano se o aluno está participando ou não no grupo.
+     */
+    public boolean existeAluno(String matricula) {
+    	return this.alunos.containsKey(matricula);
+    }
+
+    /**
+     * Verifica se o grupo criado é igual ao grupo já existente.
+     * 
+     * @param o Objeto do grupo.
+     * @return Retorna um booleano se o grupo é igual ou não a outro objeto grupo. 
+     */
+    public boolean equals(Object o) {
+    	if (o == null) {
+    		return false;
+    	} else
+    	if (this.getClass() != o.getClass()) {
+    		return false;
+    	}
+    	else {
+    		Grupo grupo = (Grupo) o;
+    		return this.nome.equals(grupo.nome);
+    	}
+    }
+    
+    /**
+     * Retorna o hashCode sobre o nome do grupo.
+     * 
+     * @return Retorna um inteiro do hashCode em relação ao nome do grupo. 
+     */
+    public int hashCode() {
+    	return this.nome.hashCode();
+    }
+
+    /**
+     * Retorna uma String sobre o resumo do grupo.
+     * 
+     * @return Retorna uma String sobre o nome do grupo e quantos alunos existem cadastrados.
+     * Além disso ele nos dá o tamanho máximo do grupo. 
+     */
+    public String toString() {
+    	return "- " + this.nome + " " + this.tamanho+ "/" + (this.existeLimite?  this.alunos.size(): "Ilimitado"); 
+    }
+    
+    /**
+     * Retorna o nome do grupo.
+     * 
+     * @return Retorna uma String com o nome do grupo.
+     */
+    public String getNome() {
+    	return this.nome;
+    }
+
+}

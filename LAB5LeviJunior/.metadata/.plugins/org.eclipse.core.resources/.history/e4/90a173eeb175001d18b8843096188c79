@@ -1,0 +1,51 @@
+package documin;
+
+import java.util.HashMap;
+
+public class Lista implements Elemento {
+    private int prioridade;
+    private String valor;
+    private HashMap<String, String> propriedades;
+    private String separador;
+    private String charLista;
+
+    public Lista(int prioridade, String valor, HashMap<String, String> propriedades, String separador, String charLista) {
+    	this.prioridade = prioridade;
+    	this.valor = valor;
+    	this.propriedades = propriedades;
+    	this.separador = separador;
+    	this.charLista = charLista;
+    }
+
+    public String gerarRepresentacaoCompleta() {
+    	String representacao = "";
+    	for (String representacao_i: this.propriedades.keySet()) {
+    		representacao += this.separador + " " + this.propriedades.get(representacao_i) + "\n";
+    	}
+		return representacao;
+    }
+
+    public String gerarRepresentacaoResumida() {
+    	String representacao = "";
+    	for (String representacao_i: this.propriedades.keySet()) {
+    		representacao += this.propriedades.get(representacao_i) + ", ";
+    	}
+		return representacao;
+    }
+
+    @Override
+    public int hashCode() {
+		return prioridade;
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+		return false;
+    }
+
+    @Override
+    public String toString() {
+		return valor;
+    }	
+}

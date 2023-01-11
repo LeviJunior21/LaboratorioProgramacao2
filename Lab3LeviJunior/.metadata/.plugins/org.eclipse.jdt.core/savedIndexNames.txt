@@ -1,0 +1,20 @@
+INDEX VERSION 1.131+/home/levi.pereira.junior/Downloads/Lab3LeviJunior/.metadata/.plugins/org.eclipse.jdt.core
+3878472087.index
+3903709620.index
+355777686.index
+3170671464.index
+209800607.index
+2600982804.index
+3337628427.index
+3983325015.index
+664388572.index
+1301147627.index
+573092857.index
+736815674.index
+1865797976.index
+3034592212.index
+3024557866.index
+1363284170.index
+1418141246.index
+1512509731.index
+897219670.index

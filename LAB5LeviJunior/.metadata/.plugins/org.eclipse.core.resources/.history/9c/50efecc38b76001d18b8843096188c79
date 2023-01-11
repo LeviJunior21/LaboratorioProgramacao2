@@ -1,0 +1,55 @@
+package documin;
+
+import java.util.ArrayList;
+
+public class DocumentoSistema {
+	private ArrayList<Elemento> documentos;
+	
+	public DocumentoSistema() {
+		this.documentos = new ArrayList<>();
+	}
+	
+	public void cadastraTexto(String texto) {
+		this.documentos.add(new Texto(texto));
+	}
+	
+	public void cadastraTermo() {
+		this.documentos.add(new Termo(0, null, null, null, null));
+	}
+	
+	public void cadastraLista() {
+		this.documentos.add(new Lista(0, null, null, null, null));
+	}
+	
+	public void cadastraTitulo() {
+		this.documentos.add(new Titulo(0, null, 0, false, null));
+	}
+	
+	public String getRepresentacaoCompleto() {
+		return "";
+	}
+	
+	public void apagarElementoDocumento(int indice) {
+		this.documentos.remove(indice);
+	}
+	
+	public void moverElementoUmaPosicaoAbaixo(int indice) {
+		if (this.documentos.size() == (indice - 1)) {
+			Elemento elemento1 = this.documentos.get(indice);
+			Elemento elemento2 = this.documentos.get(indice - 1);
+		
+			this.documentos.set(indice + 1, elemento1);
+			this.documentos.set(indice, elemento2);
+		}
+	}
+	
+	public void moverElementoUmaPosicaoAcima(int indice) {
+		if (0== (indice - 1)) {
+			Elemento elemento1 = this.documentos.get(indice);
+			Elemento elemento2 = this.documentos.get(indice - 1);
+		
+			this.documentos.set(indice - 1, elemento1);
+			this.documentos.set(indice, elemento2); 
+		}
+	}
+ }

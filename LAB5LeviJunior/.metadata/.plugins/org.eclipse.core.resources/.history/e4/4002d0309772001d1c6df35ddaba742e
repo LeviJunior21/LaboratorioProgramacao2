@@ -1,0 +1,10 @@
+package documin;
+
+public interface Elemento {
+
+	public default String gerarRepresentacaoCompleta() {
+	}
+
+	public default String gerarRepresentacaoResumida() {
+	}
+}

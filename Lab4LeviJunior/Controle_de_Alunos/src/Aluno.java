@@ -1,0 +1,85 @@
+/**
+ * Aluno da UFCG que contém nome, curso e a matrícula.  
+ * 
+ * @author LeviJunior
+ *
+ */
+public class Aluno {
+    private String nome;
+    private String curso;
+    private String matricula;
+
+    /**
+     * Constrói o aluno e atribui a sua matricula, nome e o curso.
+     * 
+     * @param matricula matricula do aluno.
+     * @param nome nome do aluno.
+     * @param curso curso do aluno.
+     * @throws IllegalArgumentException Retorna o erro caso um dos parâmetros recebidos for vazio.
+     * @throws NullPointerException Retorna o erro caso um dos parâmetros recebidos for null.
+     */
+    public Aluno(String matricula, String nome, String curso) {
+    	if (matricula != null && nome != null && curso != null) {
+    		if (!matricula.equals("") && !nome.equals("") && !curso.equals("")) {
+    			this.matricula = matricula;
+    			this.nome = nome;
+    			this.curso = curso;
+    		}
+    		else {
+    			throw new IllegalArgumentException("PARÂMETRO VAZIO RECEBIDO!");
+    		}
+    	}
+    	else {
+    		throw new NullPointerException("PARÂMETRO NULL RECEBIDO!");
+    	}
+    }
+
+    /**
+     * Gera o hachCode da matricula do aluno.
+     * 
+     * @return Retorna o inteiro do hashCode da matricula.
+     */
+    @Override
+    public int hashCode() {
+    	return this.matricula.hashCode();
+    }
+    
+    /**
+     * Verifica se o objeto criado é igual através da matricula.
+     * 
+     * @param o objeto aluno criado. 
+     * @return Retorna um valor boolenao se os objetos Aluno forem iguais. 
+     */
+    @Override
+    public boolean equals(Object o) {
+    	if (o == null) {
+    		return false;
+    	} else
+    	if (this.getClass() != o.getClass()) {
+    		return false;
+    	}
+    	else {
+    		Aluno aluno = (Aluno) o;
+    		return this.matricula.equals(aluno.matricula);
+    	}
+    }
+
+    /**
+     * Retorna o nome do curso do aluno.
+     * 
+     * @return Retorna o nome do curso do aluno.
+     */
+    public String getCurso() {
+    	return this.curso;
+    }
+    
+    /**
+     * Retorna um resumo sobre o aluno.
+     * 
+     * @return Retorna a matricula, o nome e o curso do aluno.
+     */
+    public String toString() {
+    	return "Aluno: " + this.matricula + " - " + this.nome + " - " + this.curso;
+    }
+
+}
